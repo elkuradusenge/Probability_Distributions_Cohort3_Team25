@@ -1,6 +1,6 @@
 # Formative 3 — Probability Distributions, Bayes & Gradient Descent
 
-Group: _names_
+Group: Group 25
 
 ## Repo layout
 | Path | Purpose |
