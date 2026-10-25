@@ -23,3 +23,8 @@ def count_keyword(reviews, keyword):
             total += 1
             positive += sentiment == "positive"
     return total, positive
+
+
+def bayes_posterior(prior, likelihood, marginal):
+    # P(Pos|kw) = P(kw|Pos) * P(Pos) / P(kw)
+    return likelihood * prior / marginal
