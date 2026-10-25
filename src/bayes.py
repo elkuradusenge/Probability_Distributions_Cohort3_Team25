@@ -13,3 +13,13 @@ def load_reviews(path):
             text = row["review"].lower().replace("<br />", " ")
             reviews.append((set(WORD_RE.findall(text)), row["sentiment"]))
     return reviews
+
+
+def count_keyword(reviews, keyword):
+    # count docs with the word, and how many of those are positive
+    total = positive = 0
+    for words, sentiment in reviews:
+        if keyword in words:
+            total += 1
+            positive += sentiment == "positive"
+    return total, positive
