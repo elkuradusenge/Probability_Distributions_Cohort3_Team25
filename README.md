@@ -20,9 +20,10 @@ _Fabrice Mbarushimana_
 Run: `pip install numpy pandas scipy matplotlib jupyter` → `jupyter notebook Formative3_Notebook.ipynb`.
 Download the IMDb file from Kaggle, rename it `IMDB_Dataset.csv`, and place it in `data/` before running Part 2.
 
+
 ## Part 1 — EM (talking points)
 * **Data:** 934 child heights + 205 mother heights (one per family), labels hidden.
-* **Why not split at the global mean (66.25)?** Groups overlap, so a hard cut misclassifies points on the wrong side, biases both 
+* **Why not split at the global mean (66.25)?** Groups overlap, so a hard cut misclassifies points on the wrong side, biases both
   pile means (63.58 / 69.47 vs EM 64.30 / 69.79), ignores unequal spreads/sizes, and gives no uncertainty. EM gives soft
   responsibilities.
 * **E-step:** r_ik = π_k N(x_i|μ_k,σ_k²) / Σ_j π_j N(x_i|μ_j,σ_j²).
