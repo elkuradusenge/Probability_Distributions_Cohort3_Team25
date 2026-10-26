@@ -34,3 +34,28 @@ def analytic_gradient(X, y, m, b):
     grad_m = (2 / n) * X.T @ error
     grad_b = (2 / n) * float(np.ones(n) @ error)
     return grad_m, grad_b
+
+def scipy_gradient(cost, params):
+    """Differentiate a flat-parameter cost function with SciPy.
+
+    ``cost`` receives one parameter vector, for example::
+
+        cost = lambda p: mse(X, y, p[:-1], p[-1])
+
+    The result contains one numerical partial derivative per parameter.
+    """
+    params = np.asarray(params, dtype=float)
+    grad = np.zeros_like(params)
+
+    for i in range(len(params)):
+        # Vary only parameter i while keeping all other parameters fixed.
+        def one_dim(t, i=i):
+            parameter_matrix = np.tile(params[:, None], (1, np.size(t))).astype(float)
+            parameter_matrix[i, :] = t
+            return np.array(
+                [cost(parameter_matrix[:, j]) for j in range(parameter_matrix.shape[1])]
+            ).reshape(np.shape(t))
+
+        grad[i] = derivative(one_dim, params[i], initial_step=0.5).df
+
+    return grad
