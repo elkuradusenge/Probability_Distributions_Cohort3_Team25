@@ -28,3 +28,25 @@ def count_keyword(reviews, keyword):
 def bayes_posterior(prior, likelihood, marginal):
     # P(Pos|kw) = P(kw|Pos) * P(Pos) / P(kw)
     return likelihood * prior / marginal
+
+
+def keyword_table(reviews, keywords):
+    # one row per keyword: prior, likelihood, marginal, posterior (+ direct check)
+    n = len(reviews)
+    n_pos = sum(s == "positive" for _, s in reviews)
+    prior = n_pos / n
+    rows = []
+    for kw in keywords:
+        n_kw, n_kw_pos = count_keyword(reviews, kw)
+        likelihood = n_kw_pos / n_pos
+        marginal = n_kw / n
+        rows.append(dict(
+            keyword=kw,
+            prior=prior,
+            likelihood=likelihood,
+            marginal=marginal,
+            posterior=bayes_posterior(prior, likelihood, marginal),
+            direct=n_kw_pos / n_kw,
+            n_docs=n_kw,
+        ))
+    return rows
