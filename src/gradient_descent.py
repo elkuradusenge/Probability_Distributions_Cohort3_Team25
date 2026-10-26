@@ -24,3 +24,13 @@ def mse(X, y, m, b):
     error = predict(X, m, b) - y
     return float(error @ error / len(y))
 
+def analytic_gradient(X, y, m, b):
+    """Return dJ/dm and dJ/db for the mean squared-error cost."""
+    n = len(y)
+    error = predict(X, m, b) - y
+
+    # These are the required matrix derivatives:
+    # dJ/dm = (2/n) X.T @ error and dJ/db = (2/n) 1.T @ error.
+    grad_m = (2 / n) * X.T @ error
+    grad_b = (2 / n) * float(np.ones(n) @ error)
+    return grad_m, grad_b
