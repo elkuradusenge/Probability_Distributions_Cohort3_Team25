@@ -62,3 +62,14 @@ Counting rule: a review counts once if the word appears at least once. Posterior
 ŷ = Xm + b·1, J = (1/n)eᵀe, ∇ₘJ = (2/n)Xᵀe, ∂J/∂b = (2/n)1ᵀe. m₀=[−1,2], b₀=1, α=0.01 (given b=[1,1] is read as bias 1 on both samples).
 First step: ŷ=[6,17], J=61, ∇ₘ=[45,113], ∂b=12 → m=[−1.45,0.87], b=0.88, J=6.845. `scipy_gradient` (SciPy `differentiate.derivative`) matches the analytic gradient.
 Plots: parameters vs iteration, MSE vs iteration (log scale).
+
+### Part 3 — who did which update
+Handwritten in `part3_gradient_descent_calculations.pdf`, one update per member (each starts from the previous result):
+
+| Update | Member | Pages | Result |
+|---|---|---|---|
+| 1 | Teta Nelly | 1–2 | m=[−1.45, 0.87], b=0.88, J=6.845 |
+| 2 | Elie Kuradusenge | 3–5 | m=[−1.3316, 1.1808], b=0.9318, J=2.7238 |
+| 3 | Fabrice Mbarushimana | 6–8 | m=[−1.369562, 1.095182], b=0.93624, J=2.3904 |
+
+* **Trend:** J falls every update (61 → 6.845 → 2.7238 → 2.3904), so m and b move in a direction that reduces the error.
