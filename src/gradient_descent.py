@@ -59,3 +59,50 @@ def scipy_gradient(cost, params):
         grad[i] = derivative(one_dim, params[i], initial_step=0.5).df
 
     return grad
+
+
+def gradient_descent(X, y, m0, b0, lr, n_iter):
+    """Run gradient descent and record every intermediate value.
+
+    History entry 0 is the starting point. Each later entry stores the
+    gradient used for that update, the new parameters, predictions, errors,
+    and cost, making the calculation easy to inspect or plot.
+    """
+    m = np.asarray(m0, dtype=float).copy()
+    b = float(b0)
+    y_hat = predict(X, m, b)
+    history = [
+        dict(
+            k=0,
+            m=m.copy(),
+            b=b,
+            y_hat=y_hat,
+            error=y_hat - y,
+            cost=mse(X, y, m, b),
+            grad_m=None,
+            grad_b=None,
+        )
+    ]
+
+    for k in range(1, n_iter + 1):
+        grad_m, grad_b = analytic_gradient(X, y, m, b)
+
+        # Move parameters opposite to the gradient by the learning rate.
+        m = m - lr * grad_m
+        b = b - lr * grad_b
+
+        y_hat = predict(X, m, b)
+        history.append(
+            dict(
+                k=k,
+                m=m.copy(),
+                b=b,
+                y_hat=y_hat,
+                error=y_hat - y,
+                cost=mse(X, y, m, b),
+                grad_m=grad_m,
+                grad_b=grad_b,
+            )
+        )
+
+    return m, b, history
